@@ -15,7 +15,8 @@ workflow="train"
 nnodes=1
 profile_name="L40_x4"
 profile_vendor="nvidia"
-profile_path="/opt/app-root/src/.local/share/instructlab/internal/system_profiles"
+default_profile_path="/opt/app-root/src/.local/share/instructlab/internal/system_profiles"
+profile_path=""
 train_model_path="/opt/app-root/src/.cache/instructlab/models/"
 train_phased_mt_bench_judge="/opt/app-root/src/.cache/instructlab/models/prometheus-8x7b-v2-0"
 train_phased_phase1_data="/opt/app-root/src/jul19-knowledge-26k.jsonl"
@@ -56,6 +57,7 @@ longopts+=",sdg-model:"
 longopts+=",sdg-gpus:"
 longopts+=",profile-name:"
 longopts+=",profile-vendor:"
+longopts+=",profile-path:"
 longopts+=",train-model-path:"
 longopts+=",train-phased-mt-bench-judge:"
 longopts+=",train-phased-phase1-data:"
@@ -101,6 +103,9 @@ while true; do
             ;;
         --profile-vendor)
             profile_vendor=$val
+            ;;
+        --profile-path)
+            profile_path=$val
             ;;
 
     # The following options are for training
@@ -161,11 +166,15 @@ ilab config init --non-interactive
 
 full_profile_arg=""
 # amt: changed -ge 4 to -ge 1
-if [ $ilab_version_1 -ge 19 ] && [ $ilab_version_2 -ge 1 ]; then # RHELAI 1.3 and above
-    full_profile_arg="--profile $profile_path/$profile_vendor/$profile_name.yaml"
-else # RHELAI 1.2 and below
-    profile_path="/opt/app-root/src/.local/share/instructlab/internal/train_configuration/profiles"
-    full_profile_arg="--train-profile $profile_path/$profile_name.yaml"
+if [ "$profile_path" != "" ]; then
+    full_profile_arg="--profile $profile_path"
+else
+    if [ $ilab_version_1 -ge 19 ] && [ $ilab_version_2 -ge 1 ]; then # RHELAI 1.3 and above
+        full_profile_arg="--profile $default_profile_path/$profile_vendor/$profile_name.yaml"
+    else # RHELAI 1.2 and below
+        profile_path="/opt/app-root/src/.local/share/instructlab/internal/train_configuration/profiles"
+        full_profile_arg="--train-profile $default_profile_path/$profile_name.yaml"
+    fi
 fi
 echo "ilab config init options: $full_profile_arg"
 echo "about to run: ilab config init $full_profile_arg"

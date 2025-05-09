@@ -10,7 +10,8 @@
         "profile-name",
         "train-phased-phase1-data",
         "train-phased-phase2-data",
-        "train-phased-mt-bench-judge"
+        "train-phased-mt-bench-judge",
+        "profile-path"
       ],
       "vals" : ".+"
     },
