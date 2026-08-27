@@ -9,7 +9,8 @@ See `run-ilab.json` for example usage with `crucible run run-ilab.json`.
 | File | Purpose |
 |------|---------|
 | `rickshaw.json` | Rickshaw integration: defines client scripts and parameter transformations |
-| `multiplex.json` | Parameter validation and presets for multiplex |
+| `multiplex.json` | Parameter validation rules, unit conversions, and presets for multiplex |
+| `benchmark-metadata.json` | Machine-readable description and CDM-indexed source/type list (consumed by `crucible benchmarks list`) |
 | `ilab-base` | Base setup shared by other scripts |
 | `ilab-client` | Client-side benchmark execution |
 | `ilab-get-runtime` | Runtime extraction |
