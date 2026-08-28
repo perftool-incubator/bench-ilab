@@ -1,0 +1,28 @@
+{
+  "rickshaw-benchmark-metadata": {
+    "schema": {
+      "version": "2026.08.11"
+    }
+  },
+  "benchmark": "ilab",
+  "description": "InstructLab benchmark -- evaluates synthetic data generation (SDG) and phased model training throughput for large language models.",
+  "cdm_indexed": true,
+  "cdm_sources": [
+    {
+      "source": "ilab",
+      "types": [
+        "actual-train-seconds",
+        "sdg-samples-sec",
+        "train-samples-sec"
+      ]
+    }
+  ],
+  "output_files": [
+    "ilab-client-stderrout.txt",
+    "train-stdout.txt.xz",
+    "train-stderr.txt.xz",
+    "sdg-stdout.txt.xz",
+    "sdg-stderr.txt.xz",
+    "skills-num-samples.txt"
+  ]
+}
