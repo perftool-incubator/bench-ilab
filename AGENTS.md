@@ -5,7 +5,7 @@ Scripts and configuration to run InstructLab training and synthetic data generat
 
 ## Language
 - Bash for client execution scripts
-- Python for post-processing (`ilab-post-process`)
+- Python for post-processing (`ilab-post-process.py`)
 
 ## Key Files
 | File | Purpose |
@@ -16,7 +16,7 @@ Scripts and configuration to run InstructLab training and synthetic data generat
 | `ilab-base` | Base setup shared by other scripts |
 | `ilab-client` | Client-side benchmark execution |
 | `ilab-get-runtime` | Extracts runtime from command-line options |
-| `ilab-post-process` | Parses ilab output into crucible metrics |
+| `ilab-post-process.py` | Parses ilab output into crucible metrics |
 | `workshop.json` | Engine image build requirements |
 
 ## Conventions
