@@ -27,8 +27,7 @@ else:
         print("ERROR: <TOOLBOX_HOME>/python ('%s') does not exist!" % (p))
         exit(2)
     sys.path.append(str(p))
-from toolbox.metrics import log_sample
-from toolbox.metrics import finish_samples
+from toolbox.cdm_metrics import CDMMetrics
 
 params = {}
 
@@ -53,6 +52,8 @@ def main():
     if t_global.args.workflow == '':
         print('workflow was not defined, exiting')
         return(1)
+
+    metrics = CDMMetrics()
 
     # In any benchmark post-process script, the metrics generated need to be attributed to a
     # time-period (AKA benchmark-phase).  The period which is used to report and offical
@@ -98,9 +99,9 @@ def main():
                         if first_ts == None:
                             first_ts = ts
                         sample = {'end': ts, 'value': d['overall_throughput']}
-                        log_sample(file_id, desc, names, sample)
+                        metrics.log_sample(file_id, desc, names, sample)
                         last_ts = ts
-            metric_file_name = finish_samples()
+            metric_file_name = metrics.finish_samples()
             period['metric-files'].append(metric_file_name)
             iter_sample['periods'].append(period)
 
@@ -111,8 +112,8 @@ def main():
         desc = {'source' : 'ilab', 'class': 'count', 'type': 'actual-train-seconds'}
         names = {}
         sample = {'begin': first_ts, 'end': last_ts, 'value': (last_ts - first_ts) / 1000}
-        log_sample(file_id, desc, names, sample)
-        metric_file_name = finish_samples()
+        metrics.log_sample(file_id, desc, names, sample)
+        metric_file_name = metrics.finish_samples()
         period['metric-files'].append(metric_file_name)
         iter_sample['periods'].append(period)
 
@@ -151,7 +152,7 @@ def main():
                         # We have exactly 1 sample, so providing the 'begin' timestamp is required
                         sample = {'begin': begin_ts, 'end': end_ts, 'value': samples_sec}
                         print('log_sample')
-                        log_sample(file_id, desc, names, sample)
+                        metrics.log_sample(file_id, desc, names, sample)
                         break
                     if reggy := re.search(r'^INFO\s\d+-\d+-\d+\s\d+:\d+:\d+,\d+.+Dataset\sloaded\swith\s(\d+)\ssamples', line):
                         print('found Dataset line')
@@ -166,7 +167,7 @@ def main():
                             skipped_skills = True
         
 
-        metric_file_name = finish_samples()
+        metric_file_name = metrics.finish_samples()
         period['metric-files'].append(metric_file_name)
         iter_sample['periods'].append(period)
     f = open('postprocess/post-process-data.json', 'w')
