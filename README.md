@@ -14,5 +14,5 @@ See `run-ilab.json` for example usage with `crucible run run-ilab.json`.
 | `ilab-base` | Base setup shared by other scripts |
 | `ilab-client` | Client-side benchmark execution |
 | `ilab-get-runtime` | Runtime extraction |
-| `ilab-post-process` | Post-processing: parses ilab output into crucible metrics |
+| `ilab-post-process.py` | Post-processing: parses ilab output into crucible metrics |
 | `workshop.json` | Engine image build requirements |
